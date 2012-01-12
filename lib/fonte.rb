@@ -1,5 +1,7 @@
 require "fonte/version"
+require "treetop"
+require "polyglot"
+require "fonte/parsers"
 
 module Fonte
-  # Your code goes here...
 end

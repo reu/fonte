@@ -1,0 +1,40 @@
+module Fonte
+  module Parsers
+    grammar Number
+      rule number
+        float / integer
+      end
+
+      rule float
+        (
+        # Scientific notation (eg 5e7, 2.2E-4)
+        [+-]? ([0-9]* '.')? [0-9]+ [eE] [+-]? [0-9]+
+        /
+        # Standard float (eg -43.21, .05)
+        [+-]? [0-9]* '.' [0-9]+
+        ) {
+          def value
+            Float(text_value)
+          end
+        }
+      end
+
+      rule integer
+        (
+        # Binary (eg 0b101, -0B0010)
+        [+-]? '0' [bB] [01]+
+        /
+        # Hex (eg 0xfff, +0XA30)
+        [+-]? '0' [xX] [0-9a-fA-F]+
+        /
+        # Decimal (eg 27, -421)
+        [+-]? [0-9]+
+        ) {
+          def value
+            Integer(text_value)
+          end
+        }
+      end
+    end
+  end
+end

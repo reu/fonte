@@ -1,0 +1,25 @@
+module Fonte
+  module Parsers
+    grammar Word
+      rule quoted_word
+        word
+      end
+
+      rule word
+        QUOTE ('\"' / !'"' .)* QUOTE {
+          def value
+            text_value[1...-1]
+          end
+        }
+      end
+
+      rule SPACE
+        " "+
+      end
+
+      rule QUOTE
+        '"'
+      end
+    end
+  end
+end

@@ -1,0 +1,28 @@
+module Fonte
+  module Parsers
+    grammar Rcon
+      include Word
+      include Address
+
+      rule rcon_command
+        rcon_failure / rcon_success
+      end
+
+      rule rcon_success
+        "Rcon:" SPACE rcon_challenge
+      end
+
+      rule rcon_failure
+        "Bad Rcon:" SPACE rcon_challenge
+      end
+
+      rule rcon_challenge
+        QUOTE "rcon challenge" SPACE rcon_password SPACE "command" QUOTE SPACE "from" SPACE QUOTE ip QUOTE
+      end
+
+      rule rcon_password
+        quoted_word
+      end
+    end
+  end
+end

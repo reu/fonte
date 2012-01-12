@@ -1,0 +1,19 @@
+module Fonte
+  module Parsers
+    grammar Address
+      include Number
+
+      rule ip
+        integer+ "." integer+ "." integer+ "." integer+ port? {
+          def value
+            URI.parse("//" + text_value)
+          end
+        }
+      end
+
+      rule port
+        ":" integer
+      end
+    end
+  end
+end
