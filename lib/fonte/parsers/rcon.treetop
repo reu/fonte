@@ -9,39 +9,15 @@ module Fonte
       end
 
       rule rcon_success
-        "Rcon:" SPACE rcon_challenge {
-          def password
-            rcon_challenge.password
-          end
-
-          def origin
-            rcon_challenge.origin
-          end
-        }
+        "Rcon:" SPACE rcon_challenge <Fonte::Nodes::RconCommandNode>
       end
 
       rule rcon_failure
-        "Bad Rcon:" SPACE rcon_challenge {
-          def password
-            rcon_challenge.password
-          end
-
-          def origin
-            rcon_challenge.origin
-          end
-        }
+        "Bad Rcon:" SPACE rcon_challenge <Fonte::Nodes::RconCommandNode>
       end
 
       rule rcon_challenge
-        QUOTE "rcon challenge" SPACE rcon_password SPACE "command" QUOTE SPACE rcon_origin {
-          def password
-            rcon_password
-          end
-
-          def origin
-            rcon_origin
-          end
-        }
+        QUOTE "rcon challenge" SPACE rcon_password SPACE "command" QUOTE SPACE rcon_origin
       end
 
       rule rcon_password
