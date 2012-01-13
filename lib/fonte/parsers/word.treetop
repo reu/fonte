@@ -2,13 +2,17 @@ module Fonte
   module Parsers
     grammar Word
       rule quoted_word
-        word
+        QUOTE word:word? QUOTE {
+          def value
+            word.value
+          end
+        }
       end
 
       rule word
-        QUOTE ('\"' / !'"' .)* QUOTE {
+        (ESCAPED_QUOTE / !QUOTE .)* {
           def value
-            text_value[1...-1]
+            text_value
           end
         }
       end
@@ -19,6 +23,10 @@ module Fonte
 
       rule QUOTE
         '"'
+      end
+
+      rule ESCAPED_QUOTE
+        '\"'
       end
     end
   end
