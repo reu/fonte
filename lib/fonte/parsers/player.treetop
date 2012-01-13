@@ -1,0 +1,40 @@
+module Fonte
+  module Parsers
+    grammar Player
+      include Number
+      include Word
+
+      rule player
+        nickname "<" uid ">" "<" steam_id ">" "<" team ">"
+      end
+
+      rule nickname
+        (![<>] .)* {
+          def value
+            text_value
+          end
+        }
+      end
+
+      rule uid
+        integer
+      end
+
+      rule steam_id
+        [a-zA-Z0-9:_]+ {
+          def value
+            text_value == "Bot" ? nil : text_value
+          end
+        }
+      end
+
+      rule team
+        (![<>] .)* {
+          def value
+            text_value == "Unassigned" || text_value == "" ? nil : text_value
+          end
+        }
+      end
+    end
+  end
+end
