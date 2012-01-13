@@ -1,0 +1,76 @@
+module Fonte
+  module Parsers
+    grammar Temporal
+      include Word
+
+      rule date_time
+        date SPACE "-" SPACE time {
+          def value
+            DateTime.new date.year.value,
+                         date.month.value,
+                         date.day.value,
+                         time.hours.value,
+                         time.minutes.value,
+                         time.seconds.value
+          end
+        }
+      end
+
+      rule date
+        month "/" day "/" year
+      end
+
+      rule day
+        [0-3] [0-9] {
+          def value
+            text_value.to_i
+          end
+        }
+      end
+
+      rule month
+        [0-1] [0-9] {
+          def value
+            text_value.to_i
+          end
+        }
+      end
+
+      rule year
+        [0-9] [0-9] [0-9] [0-9] {
+          def value
+            text_value.to_i
+          end
+        }
+      end
+
+      rule time
+        hours ":" minutes ":" seconds
+      end
+
+      rule hours
+        [0-9] [0-9] {
+          def value
+            text_value.to_i
+          end
+        }
+      end
+
+      rule minutes
+        [0-9] [0-9] {
+          def value
+            text_value.to_i
+          end
+        }
+      end
+
+      rule seconds
+        [0-9] [0-9] {
+          def value
+            text_value.to_i
+          end
+        }
+      end
+    end
+  end
+end
