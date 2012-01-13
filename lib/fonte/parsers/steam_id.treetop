@@ -7,80 +7,23 @@ module Fonte
           steam_id_pending
         / steam_id_bot
         / steam_id_invalid
-        / universe:steam_universe ":" id_part:steam_id_part ":" account_number:steam_account_number {
-          def value
-            text_value
-          end
-        }
+        / universe:steam_universe ":" id_part:steam_id_part ":" account_number:steam_account_number <Fonte::Nodes::SteamIDNode>
       end
 
       rule steam_id_pending
-        "STEAM_ID_PENDING" {
-          def value
-            nil
-          end
-        }
+        "STEAM_ID_PENDING" <Fonte::Nodes::PendingSteamIDNode>
       end
 
       rule steam_id_bot
-        "Bot" {
-          def value
-            nil
-          end
-        }
+        "Bot" <Fonte::Nodes::BotSteamIDNode>
       end
 
       rule steam_id_invalid
-        "UNKNOWN" {
-          def value
-            nil
-          end
-        }
+        "UNKNOWN" <Fonte::Nodes::InvalidSteamIDNode>
       end
 
       rule steam_universe
-        "STEAM_" universe:[0-9] {
-          def value
-            case universe.text_value.to_i
-              when 0
-                "Unspecified"
-              when 1
-                "Public"
-              when 2
-                "Beta"
-              when 3
-                "Internal"
-              when 4
-                "Dev"
-              when 5
-                "RC"
-            end
-          end
-
-          def unspecified?
-            value == "Unspecified"
-          end
-
-          def public?
-            value == "Public"
-          end
-
-          def beta?
-            value == "Beta"
-          end
-
-          def internal?
-            value == "Internal"
-          end
-
-          def developer?
-            value = "Dev"
-          end
-
-          def rc?
-            value == "RC"
-          end
-        }
+        "STEAM_" universe:[0-9] <Fonte::Nodes::SteamIDUniverseNode>
       end
 
       rule steam_id_part

@@ -7,30 +7,48 @@ module Fonte
 
       subject { parser.parse(steam_id) }
 
-      describe "value" do
-        subject { parser.parse(steam_id).value }
+      describe "node" do
+        subject { parser.parse(steam_id) }
 
         context "of a validated user" do
           let(:steam_id) { "STEAM_1:1:24968171" }
 
-          it "is the string representation of the steam id itself" do
-            should == steam_id
-          end
+          its(:value) { should == steam_id }
+
+          it { should be_valid }
+          it { should_not be_invalid }
+          it { should_not be_bot }
+          it { should_not be_pending }
         end
 
-        context "of a pending approve user" do
+        context "of a pending user" do
           let(:steam_id) { "STEAM_ID_PENDING" }
-          it { should_not be }
+          its(:value) { should_not be }
+
+          it { should_not be_valid }
+          it { should_not be_invalid }
+          it { should_not be_bot }
+          it { should be_pending }
         end
 
         context "of a bot" do
           let(:steam_id) { "Bot" }
-          it { should_not be }
+          its(:value) { should_not be }
+
+          it { should_not be_valid }
+          it { should_not be_invalid }
+          it { should be_bot }
+          it { should_not be_pending }
         end
 
         context "of a invalid user" do
           let(:steam_id) { "UNKNOWN" }
-          it { should_not be }
+          its(:value) { should_not be }
+
+          it { should_not be_valid }
+          it { should be_invalid }
+          it { should_not be_bot }
+          it { should_not be_pending }
         end
       end
 
