@@ -9,19 +9,51 @@ module Fonte
       end
 
       rule rcon_success
-        "Rcon:" SPACE rcon_challenge
+        "Rcon:" SPACE rcon_challenge {
+          def password
+            rcon_challenge.password
+          end
+
+          def origin
+            rcon_challenge.origin
+          end
+        }
       end
 
       rule rcon_failure
-        "Bad Rcon:" SPACE rcon_challenge
+        "Bad Rcon:" SPACE rcon_challenge {
+          def password
+            rcon_challenge.password
+          end
+
+          def origin
+            rcon_challenge.origin
+          end
+        }
       end
 
       rule rcon_challenge
-        QUOTE "rcon challenge" SPACE rcon_password SPACE "command" QUOTE SPACE "from" SPACE QUOTE ip QUOTE
+        QUOTE "rcon challenge" SPACE rcon_password SPACE "command" QUOTE SPACE rcon_origin {
+          def password
+            rcon_password
+          end
+
+          def origin
+            rcon_origin
+          end
+        }
       end
 
       rule rcon_password
         quoted_word
+      end
+
+      rule rcon_origin
+        "from" SPACE QUOTE ip QUOTE {
+          def value
+            ip.value
+          end
+        }
       end
     end
   end

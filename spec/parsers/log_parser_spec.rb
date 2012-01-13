@@ -117,7 +117,8 @@ module Fonte
 
         describe "rcon command" do
           let(:text) { 'L 12/26/2011 - 02:14:33: Rcon: "rcon challenge "password" command" from "192.168.10.1:17015"' }
-          it { should be }
+          subject { parser.parse(text).command }
+          it_should_behave_like "a rcon command", :password => "password", :origin => "//192.168.10.1:17015"
         end
       end
     end
