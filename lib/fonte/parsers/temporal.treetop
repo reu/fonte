@@ -4,16 +4,7 @@ module Fonte
       include Word
 
       rule date_time
-        date SPACE "-" SPACE time {
-          def value
-            DateTime.new date.year.value,
-                         date.month.value,
-                         date.day.value,
-                         time.hours.value,
-                         time.minutes.value,
-                         time.seconds.value
-          end
-        }
+        date SPACE "-" SPACE time <Fonte::Nodes::DateTimeNode>
       end
 
       rule date
