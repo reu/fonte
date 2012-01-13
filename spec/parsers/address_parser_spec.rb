@@ -15,6 +15,7 @@ module Fonte
       context "with a valid ip number and port" do
         let(:ip) { "192.168.10.1:3000" }
         it { should be }
+        its(:"port.value") { should == 3000 }
       end
 
       context "with a missing octet" do

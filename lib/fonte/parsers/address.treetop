@@ -4,7 +4,7 @@ module Fonte
       include Number
 
       rule ip
-        octet "." octet "." octet "." octet port? <Fonte::Nodes::IpNode>
+        octet "." octet "." octet "." octet port:port? <Fonte::Nodes::IpNode>
       end
 
       rule octet
@@ -12,7 +12,11 @@ module Fonte
       end
 
       rule port
-        ":" integer
+        ":" integer {
+          def value
+            integer.value
+          end
+        }
       end
     end
   end
