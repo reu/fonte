@@ -4,11 +4,11 @@ module Fonte
       include Number
 
       rule ip
-        integer+ "." integer+ "." integer+ "." integer+ port? {
-          def value
-            URI.parse("//" + text_value)
-          end
-        }
+        octet "." octet "." octet "." octet port? <Fonte::Nodes::IpNode>
+      end
+
+      rule octet
+        [0-9] 1..3
       end
 
       rule port
