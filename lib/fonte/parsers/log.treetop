@@ -28,27 +28,15 @@ module Fonte
       end
 
       rule log_filename
-        "(file" SPACE quoted_word ")" {
-          def value
-            quoted_word.value
-          end
-        }
+        "(file" SPACE quoted_word ")" <Fonte::Nodes::SingleWordNode>
       end
 
       rule log_game_path
-        "(game" SPACE quoted_word ")" {
-          def value
-            quoted_word.value
-          end
-        }
+        "(game" SPACE quoted_word ")" <Fonte::Nodes::SingleWordNode>
       end
 
       rule log_game_version
-        "(version" SPACE quoted_word ")" {
-          def value
-            quoted_word.value
-          end
-        }
+        "(version" SPACE quoted_word ")" <Fonte::Nodes::SingleWordNode>
       end
 
       rule map_loading
@@ -64,27 +52,15 @@ module Fonte
       end
 
       rule map_crc
-        "CRC" SPACE quoted_word {
-          def value
-            quoted_word.value
-          end
-        }
+        "CRC" SPACE quoted_word <Fonte::Nodes::SingleWordNode>
       end
 
       rule server_name
-        "Server name is" SPACE server_name:quoted_word {
-          def value
-            quoted_word.value
-          end
-        }
+        "Server name is" SPACE server_name:quoted_word <Fonte::Nodes::SingleWordNode>
       end
 
       rule server_say
-        "Server say" SPACE server_say:quoted_word {
-          def value
-            quoted_word.value
-          end
-        }
+        "Server say" SPACE server_say:quoted_word <Fonte::Nodes::SingleWordNode>
       end
     end
   end
