@@ -8,11 +8,15 @@ module Fonte
         / steam_id_bot
         / steam_id_console
         / steam_id_invalid
-        / universe:steam_universe ":" id_part:steam_id_part ":" account_number:steam_account_number <Fonte::Nodes::SteamIDNode>
+        / universe:steam_universe ":" id_part:steam_id_part ":" account_number:steam_account_number <Fonte::Nodes::SteamIDNode> {
+          def value
+            text_value
+          end
+        }
       end
 
       rule steam_id_pending
-        "STEAM_ID_PENDING" <Fonte::Nodes::BlankSteamIDNode> {
+        "STEAM_ID_PENDING" <Fonte::Nodes::SteamIDNode> {
           def pending?
             true
           end
@@ -20,7 +24,7 @@ module Fonte
       end
 
       rule steam_id_bot
-        "Bot" <Fonte::Nodes::BlankSteamIDNode> {
+        "Bot" <Fonte::Nodes::SteamIDNode> {
           def bot?
             true
           end
@@ -28,7 +32,7 @@ module Fonte
       end
 
       rule steam_id_console
-        "Console" <Fonte::Nodes::BlankSteamIDNode> {
+        "Console" <Fonte::Nodes::SteamIDNode> {
           def console?
             true
           end
@@ -36,8 +40,8 @@ module Fonte
       end
 
       rule steam_id_invalid
-        "UNKNOWN" <Fonte::Nodes::BlankSteamIDNode> {
-          def invalid?
+        "UNKNOWN" <Fonte::Nodes::SteamIDNode> {
+          def unknown?
             true
           end
         }

@@ -2,14 +2,14 @@ module Fonte
   module Nodes
     class SteamIDNode < Treetop::Runtime::SyntaxNode
       def value
-        text_value
+        nil
       end
 
-      def valid?
-        !invalid? && !bot? && !pending?
+      def real_player?
+        !unknown? && !bot? && !pending? && !console?
       end
 
-      def invalid?
+      def unknown?
         false
       end
 

@@ -12,12 +12,11 @@ module Fonte
 
         context "of a validated user" do
           let(:steam_id) { "STEAM_1:1:24968171" }
-
           its(:value) { should == steam_id }
 
-          it { should be_valid }
-          it { should_not be_invalid }
+          it { should be_real_player }
           it { should_not be_bot }
+          it { should_not be_unknown }
           it { should_not be_pending }
           it { should_not be_console }
         end
@@ -26,8 +25,8 @@ module Fonte
           let(:steam_id) { "STEAM_ID_PENDING" }
           its(:value) { should_not be }
 
-          it { should_not be_valid }
-          it { should_not be_invalid }
+          it { should_not be_real_player }
+          it { should_not be_unknown }
           it { should_not be_bot }
           it { should be_pending }
           it { should_not be_console }
@@ -37,8 +36,8 @@ module Fonte
           let(:steam_id) { "Bot" }
           its(:value) { should_not be }
 
-          it { should_not be_valid }
-          it { should_not be_invalid }
+          it { should_not be_real_player }
+          it { should_not be_unknown }
           it { should be_bot }
           it { should_not be_pending }
           it { should_not be_console }
@@ -48,8 +47,8 @@ module Fonte
           let(:steam_id) { "UNKNOWN" }
           its(:value) { should_not be }
 
-          it { should_not be_valid }
-          it { should be_invalid }
+          it { should_not be_real_player }
+          it { should be_unknown }
           it { should_not be_bot }
           it { should_not be_pending }
           it { should_not be_console }
@@ -59,8 +58,8 @@ module Fonte
           let(:steam_id) { "Console" }
           its(:value) { should_not be }
 
-          it { should be_valid }
-          it { should_not be_invalid }
+          it { should_not be_real_player }
+          it { should_not be_unknown }
           it { should_not be_bot }
           it { should_not be_pending }
           it { should be_console }
