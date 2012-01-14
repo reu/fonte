@@ -7,7 +7,7 @@ More info can be found at [HL Engine Log Standard documentation](https://develop
 
 ## Examples
 
-Fonte comes with a bunch of parsers that can be used individually. Also, there is the `LogParser` which will then includes all the other `_*Parser_` to parse a full log file.
+Fonte comes with a bunch of parsers that can be used individually. Also, there is the `LogParser` which will then includes all the other `*Parser` to parse a full log file.
 
 For example, if you wish to parse only a player informaton, you could use the PlayerParser:
 
@@ -26,7 +26,6 @@ Another case is parsing a rcon authentication individually and within a log:
 rcon_parser = Fonte::Parsers::RconParser.new
 rcon_authentication = rcon_parser.parse('Rcon: "rcon challenge "super secret" command" from "192.168.10.1:17015"')
 rcon_authentication.password.value      # => "super secret"
-
 
 log_parser = Fonte::Parsers::LogParser.new
 log = log_parser.parse('L 12/26/2011 - 02:14:33: Rcon: "rcon challenge "super secret" command" from "192.168.10.1:17015"')
