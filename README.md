@@ -23,11 +23,10 @@ player.team.value                       # => "Red"
 Or you could parse a rcon authentication individually or within a log:
 
 ```ruby
-rcon_authentication = Fonte::Parsers::PlayerParser.new.parse('Rcon: "rcon challenge "super secret" command" from "192.168.10.1:17015"')
+rcon_authentication = Fonte::Parsers::RconParser.new.parse('Rcon: "rcon challenge "super secret" command" from "192.168.10.1:17015"')
 rcon_authentication.password.value      # => "super secret"
-```
 
-```ruby
+
 log = Fonte::Parsers::LogParser.new.parse('L 12/26/2011 - 02:14:33: Rcon: "rcon challenge "super secret" command" from "192.168.10.1:17015"')
 
 log.command.password.value              # => "super secret"
