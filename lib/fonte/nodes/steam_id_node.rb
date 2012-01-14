@@ -20,6 +20,10 @@ module Fonte
       def pending?
         false
       end
+
+      def console?
+        false
+      end
     end
   end
 end

@@ -19,6 +19,7 @@ module Fonte
           it { should_not be_invalid }
           it { should_not be_bot }
           it { should_not be_pending }
+          it { should_not be_console }
         end
 
         context "of a pending user" do
@@ -29,6 +30,7 @@ module Fonte
           it { should_not be_invalid }
           it { should_not be_bot }
           it { should be_pending }
+          it { should_not be_console }
         end
 
         context "of a bot" do
@@ -39,6 +41,7 @@ module Fonte
           it { should_not be_invalid }
           it { should be_bot }
           it { should_not be_pending }
+          it { should_not be_console }
         end
 
         context "of a invalid user" do
@@ -49,6 +52,18 @@ module Fonte
           it { should be_invalid }
           it { should_not be_bot }
           it { should_not be_pending }
+          it { should_not be_console }
+        end
+
+        context "of the console user" do
+          let(:steam_id) { "Console" }
+          its(:value) { should_not be }
+
+          it { should be_valid }
+          it { should_not be_invalid }
+          it { should_not be_bot }
+          it { should_not be_pending }
+          it { should be_console }
         end
       end
 

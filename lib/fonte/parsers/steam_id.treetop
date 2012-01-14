@@ -6,6 +6,7 @@ module Fonte
       rule steam_id
           steam_id_pending
         / steam_id_bot
+        / steam_id_console
         / steam_id_invalid
         / universe:steam_universe ":" id_part:steam_id_part ":" account_number:steam_account_number <Fonte::Nodes::SteamIDNode>
       end
@@ -16,6 +17,14 @@ module Fonte
 
       rule steam_id_bot
         "Bot" <Fonte::Nodes::BotSteamIDNode>
+      end
+
+      rule steam_id_console
+        "Console" <Fonte::Nodes::BlankSteamIDNode> {
+          def console?
+            true
+          end
+        }
       end
 
       rule steam_id_invalid

@@ -24,7 +24,7 @@ module Fonte
       rule team
         (![<>] .)* {
           def value
-            text_value == "Unassigned" || text_value == "" ? nil : text_value
+            text_value == "Unassigned" || text_value == "Console" || text_value == "" ? nil : text_value
           end
         }
       end

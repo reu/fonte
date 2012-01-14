@@ -18,6 +18,12 @@ module Fonte
         its(:"steam_id.value") { should be_nil }
       end
 
+      context "when the player is the console" do
+        let(:player) { "Console<0><Console><Console>" }
+        its(:"steam_id.value") { should be_nil }
+        its(:"team.value")     { should be_nil }
+      end
+
       context "when the team is not present" do
         let(:player) { "Reu<2><STEAM_1:1:24968171><>" }
         its(:"team.value") { should be_nil }
