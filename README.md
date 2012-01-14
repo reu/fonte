@@ -20,15 +20,16 @@ player.steam_id.account_number.value    # => 24968171
 player.team.value                       # => "Red"
 ```
 
-Or you could parse a rcon authentication individually or within a log:
+Another case is parsing a rcon authentication individually and within a log:
 
 ```ruby
-rcon_authentication = Fonte::Parsers::RconParser.new.parse('Rcon: "rcon challenge "super secret" command" from "192.168.10.1:17015"')
+rcon_parser = Fonte::Parsers::RconParser.new
+rcon_authentication = rcon_parser.parse('Rcon: "rcon challenge "super secret" command" from "192.168.10.1:17015"')
 rcon_authentication.password.value      # => "super secret"
 
 
-log = Fonte::Parsers::LogParser.new.parse('L 12/26/2011 - 02:14:33: Rcon: "rcon challenge "super secret" command" from "192.168.10.1:17015"')
-
+log_parser = Fonte::Parsers::LogParser.new
+log = log_parser.parse('L 12/26/2011 - 02:14:33: Rcon: "rcon challenge "super secret" command" from "192.168.10.1:17015"')
 log.command.password.value              # => "super secret"
 log.date_time.day                       # => 26
 ```
