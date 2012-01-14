@@ -10,11 +10,15 @@ module Fonte
       end
 
       rule word
-        (ESCAPED_QUOTE / !QUOTE .)* {
+        character* {
           def value
             text_value
           end
         }
+      end
+
+      rule character
+        (ESCAPED_QUOTE / !QUOTE .)
       end
 
       rule SPACE

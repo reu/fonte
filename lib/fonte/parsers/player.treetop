@@ -22,7 +22,7 @@ module Fonte
       end
 
       rule team
-        (![<>] .)* {
+        (![<>] character)* {
           def value
             text_value == "Unassigned" || text_value == "Console" || text_value == "" ? nil : text_value
           end
