@@ -6,7 +6,11 @@ module Fonte
       include SteamID
 
       rule player
-        nickname "<" uid ">" "<" steam_id ">" "<" team ">"
+        nickname "<" uid ">" "<" steam_id ">" "<" team ">" {
+          def value
+            text_value
+          end
+        }
       end
 
       rule nickname

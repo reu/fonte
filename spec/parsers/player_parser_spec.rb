@@ -8,6 +8,8 @@ module Fonte
 
       subject { parser.parse(player) }
 
+      its(:value) { should == "Reu<2><STEAM_1:1:24968171><Red>" }
+
       its(:"nickname.value") { should == "Reu" }
       its(:"uid.value")      { should == 2 }
       its(:"steam_id.value") { should == "STEAM_1:1:24968171" }
