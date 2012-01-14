@@ -45,6 +45,74 @@ module Fonte
           end
         end
 
+        describe "cvar start command" do
+          let(:command) { parser.parse(text).command }
+
+          context "when server starts with an upcase 'S'" do
+            let(:text) { 'L 12/26/2011 - 02:14:29: Server cvars start' }
+            it { should be }
+          end
+
+          context "when server starts with an downcase 'S'" do
+            let(:text) { 'L 12/26/2011 - 02:14:29: server cvars start' }
+            it { should be }
+          end
+        end
+
+        describe "cvar end command" do
+          let(:command) { parser.parse(text).command }
+
+          context "when server starts with an upcase 'S'" do
+            let(:text) { 'L 12/26/2011 - 02:14:29: Server cvars end' }
+            it { should be }
+          end
+
+          context "when server starts with an downcase 'S'" do
+            let(:text) { 'L 12/26/2011 - 02:14:29: server cvars end' }
+            it { should be }
+          end
+        end
+
+        describe "cvar set command" do
+          let(:command) { parser.parse(text).command }
+
+          context "when server starts with an upcase 'S'" do
+            let(:text) { 'L 12/26/2011 - 02:14:29: Server cvar "var" = "value"' }
+            it { should be }
+
+            describe "the variable" do
+              subject { command }
+
+              its(:value) { should == "value" }
+              its(:name)  { should == "var" }
+            end
+          end
+
+          context "when server starts with an downcase 'S'" do
+            let(:text) { 'L 12/26/2011 - 02:14:29: server cvar "var" = "value"' }
+            it { should be }
+
+            describe "the variable" do
+              subject { command }
+
+              its(:value) { should == "value" }
+              its(:name)  { should == "var" }
+            end
+          end
+
+          context "when server starts without the Server cvar entry " do
+            let(:text) { 'L 12/26/2011 - 02:14:29: "var" = "value"' }
+            it { should be }
+
+            describe "the variable" do
+              subject { command }
+
+              its(:value) { should == "value" }
+              its(:name)  { should == "var" }
+            end
+          end
+        end
+
         describe "map loading command" do
           let(:text) { 'L 12/26/2011 - 02:14:29: Loading map "c4m2_sugarmill_a"' }
           it { should be }

@@ -12,6 +12,9 @@ module Fonte
       rule command
           log_started
         / log_ended
+        / cvar_start
+        / cvar_end
+        / cvar_set
         / map_loading
         / map_started
         / server_name
@@ -37,6 +40,26 @@ module Fonte
 
       rule log_game_version
         "(version" SPACE quoted_word ")" <Fonte::Nodes::SingleWordNode>
+      end
+
+      rule cvar_start
+        [Ss] "erver cvars start"
+      end
+
+      rule cvar_end
+        [Ss] "erver cvars end"
+      end
+
+      rule cvar_set
+        ([Ss] "erver cvar" SPACE)? key:quoted_word SPACE "=" SPACE val:quoted_word {
+          def name
+            key.value
+          end
+
+          def value
+            val.value
+          end
+        }
       end
 
       rule map_loading
