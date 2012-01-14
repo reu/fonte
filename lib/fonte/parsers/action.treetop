@@ -1,0 +1,228 @@
+module Fonte
+  module Parsers
+    grammar Action
+      include Word
+      include Player
+      include Address
+
+      rule action
+          connection_action
+        / validation_action
+        / enter_game_action
+        / disconnection_action
+        / kick_action
+        / kick_and_ban_action
+        / suicide_action
+        / join_team_action
+        / role_selection_action
+        / name_change_action
+        / kill_action
+        / injure_action
+        / triggered_player_action_against_player
+        / triggered_player_action
+        / triggered_team_action
+        / triggered_world_action
+        / chat_action
+        / team_chat_action
+        / private_chat_action
+        / team_alliance_action
+        / score_report
+        / weapon_selection_action
+        / weapon_pickup_action
+      end
+
+      rule connection_action
+        QUOTE player QUOTE SPACE "connected, address" SPACE QUOTE ip QUOTE {
+          def value
+            "connection"
+          end
+        }
+      end
+
+      rule validation_action
+        QUOTE player QUOTE SPACE "STEAM USERID validated" {
+          def value
+            "validation"
+          end
+        }
+      end
+
+      rule enter_game_action
+        QUOTE player QUOTE SPACE "entered the game" {
+          def value
+            "enter"
+          end
+        }
+      end
+
+      rule disconnection_action
+        QUOTE player QUOTE SPACE "disconnected" {
+          def value
+            "disconnection"
+          end
+        }
+      end
+
+      rule kick_action
+        QUOTE player QUOTE SPACE "was kicked by" SPACE '"Console"' {
+          def value
+            "kick"
+          end
+        }
+      end
+
+      rule kick_and_ban_action
+        QUOTE player QUOTE SPACE "was kicked and banned by" SPACE '"Console"' {
+          def value
+            "kickban"
+          end
+        }
+      end
+
+      rule suicide_action
+        QUOTE player QUOTE SPACE "committed suicide with" SPACE QUOTE weapon QUOTE {
+          def value
+            "suicide"
+          end
+        }
+      end
+
+      rule join_team_action
+        QUOTE player QUOTE SPACE "joined team" SPACE QUOTE team QUOTE {
+          def value
+            "join"
+          end
+        }
+      end
+
+      rule role_selection_action
+        QUOTE player QUOTE SPACE "changed role to" SPACE QUOTE role QUOTE {
+          def value
+            "role selection"
+          end
+        }
+      end
+
+      rule name_change_action
+        QUOTE player QUOTE SPACE "changed name to" SPACE new_name:quoted_word {
+          def value
+            "name change"
+          end
+        }
+      end
+
+      rule kill_action
+        QUOTE attacker:player QUOTE SPACE "killed" SPACE QUOTE victim:player QUOTE SPACE "with" SPACE QUOTE weapon QUOTE {
+          def value
+            "kill"
+          end
+        }
+      end
+
+      rule injure_action
+        QUOTE attacker:player QUOTE SPACE "attacked" SPACE QUOTE victim:player QUOTE SPACE "with" SPACE QUOTE weapon QUOTE {
+          def value
+            "injure"
+          end
+        }
+      end
+
+      rule triggered_player_action_against_player
+        QUOTE attacker:player QUOTE SPACE "triggered" SPACE action:quoted_word SPACE "against" SPACE QUOTE victim:player QUOTE SPACE "with" SPACE QUOTE weapon QUOTE {
+          def value
+            action.value
+          end
+        }
+      end
+
+      rule triggered_player_action
+        QUOTE player QUOTE SPACE "triggered" SPACE action:quoted_word {
+          def value
+            action.value
+          end
+        }
+      end
+
+      rule triggered_team_action
+        "Team" SPACE QUOTE team QUOTE SPACE "triggered" SPACE action:quoted_word {
+          def value
+            action.value
+          end
+        }
+      end
+
+      rule triggered_world_action
+        "World triggered" SPACE action:quoted_word {
+          def value
+            action.value
+          end
+        }
+      end
+
+      rule chat_action
+        QUOTE player QUOTE SPACE "say" SPACE message:quoted_word {
+          def value
+            "chat"
+          end
+        }
+      end
+
+      rule team_chat_action
+        QUOTE player QUOTE SPACE "say_team" SPACE message:quoted_word {
+          def value
+            "team chat"
+          end
+        }
+      end
+
+      rule private_chat_action
+        QUOTE player QUOTE SPACE "tell" SPACE QUOTE target:player QUOTE SPACE "message" SPACE message:quoted_word {
+          def value
+            "private chat"
+          end
+        }
+      end
+
+      rule team_alliance_action
+        "Team" SPACE QUOTE team QUOTE SPACE "formed alliance with team" SPACE QUOTE allied_team:team QUOTE {
+          def value
+            "alliance"
+          end
+        }
+      end
+
+      rule score_report
+        "Team" SPACE QUOTE team QUOTE SPACE "scored" SPACE QUOTE points:integer QUOTE SPACE "with" SPACE QUOTE players_count:integer QUOTE SPACE "players" {
+          def value
+            "team score"
+          end
+        }
+      end
+
+      rule weapon_selection_action
+        QUOTE player QUOTE SPACE "selected weapon" SPACE QUOTE weapon QUOTE {
+          def value
+            "weapon selection"
+          end
+        }
+      end
+
+      rule weapon_pickup_action
+        QUOTE player QUOTE SPACE "acquired weapon" SPACE QUOTE weapon QUOTE {
+          def value
+            "weapon pickup"
+          end
+        }
+      end
+
+      rule role
+        word
+      end
+
+      rule weapon
+        word
+      end
+    end
+  end
+end
+
