@@ -129,7 +129,7 @@ module Fonte
       end
 
       rule triggered_player_action_against_player
-        QUOTE attacker:player QUOTE SPACE "triggered" SPACE action:quoted_word SPACE "against" SPACE QUOTE victim:player QUOTE SPACE "with" SPACE QUOTE weapon QUOTE properties:action_properties? {
+        QUOTE attacker:player QUOTE SPACE "triggered" SPACE action:quoted_word SPACE "against" SPACE QUOTE victim:player QUOTE (SPACE "with" SPACE QUOTE weapon QUOTE)? properties:action_properties? {
           def value
             action.value
           end

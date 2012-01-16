@@ -116,14 +116,32 @@ module Fonte
       end
 
       describe "action trigger against player" do
-        let(:action) { '"Reu<2><STEAM_1:1:24968171><Blue>" triggered "player_extinguished" against "guimello<13><STEAM_1:1:34492580><Red>" with "tf_weapon_medigun"' }
+        let(:action) { '"Reu<2><STEAM_1:1:24968171><Blue>" triggered "player_extinguished" against "guimello<13><STEAM_1:1:34492580><Red>"' }
         its(:value) { should == "player_extinguished" }
         its(:"attacker.value") { should == "Reu<2><STEAM_1:1:24968171><Blue>" }
         its(:"victim.value") { should == "guimello<13><STEAM_1:1:34492580><Red>" }
 
+        context "with extra arguments" do
+          let(:action) { '"Reu<2><STEAM_1:1:24968171><Blue>" triggered "player_extinguished" against "guimello<13><STEAM_1:1:34492580><Red>"' }
+          its(:value) { should == "player_extinguished" }
+          its(:"attacker.value") { should == "Reu<2><STEAM_1:1:24968171><Blue>" }
+          its(:"victim.value") { should == "guimello<13><STEAM_1:1:34492580><Red>" }
+        end
+
         context "with properties" do
+          let(:action) { '"Reu<2><STEAM_1:1:24968171><Blue>" triggered "player_extinguished" against "guimello<13><STEAM_1:1:34492580><Red>" (attacker_position "3354 -2485 -187") (victim_position "3410 -2518 -149")' }
+          it_should_behave_like "a action with properties", "attacker_position", "victim_position"
+          its(:value) { should == "player_extinguished" }
+          its(:"attacker.value") { should == "Reu<2><STEAM_1:1:24968171><Blue>" }
+          its(:"victim.value") { should == "guimello<13><STEAM_1:1:34492580><Red>" }
+        end
+
+        context "with properties and extra arguments" do
           let(:action) { '"Reu<2><STEAM_1:1:24968171><Blue>" triggered "player_extinguished" against "guimello<13><STEAM_1:1:34492580><Red>" with "tf_weapon_medigun" (attacker_position "3354 -2485 -187") (victim_position "3410 -2518 -149")' }
           it_should_behave_like "a action with properties", "attacker_position", "victim_position"
+          its(:value) { should == "player_extinguished" }
+          its(:"attacker.value") { should == "Reu<2><STEAM_1:1:24968171><Blue>" }
+          its(:"victim.value") { should == "guimello<13><STEAM_1:1:34492580><Red>" }
         end
       end
 
