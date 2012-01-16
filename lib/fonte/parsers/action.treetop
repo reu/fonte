@@ -286,9 +286,22 @@ module Fonte
       end
 
       rule score_report
-        "Team" SPACE QUOTE team QUOTE SPACE "scored" SPACE QUOTE points:integer QUOTE SPACE "with" SPACE QUOTE players_count:integer QUOTE SPACE "players" {
+        "Team" SPACE QUOTE team QUOTE SPACE score_type SPACE QUOTE points:integer QUOTE SPACE "with" SPACE QUOTE players_count:integer QUOTE SPACE "players" {
           def value
-            "team score"
+            score_type.value
+          end
+        }
+      end
+
+      rule score_type
+        ("current score" / "final score" / "scored") {
+          def value
+            case text_value
+              when "scored"
+                "team score"
+              else
+                text_value
+            end
           end
         }
       end

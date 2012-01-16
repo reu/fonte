@@ -292,6 +292,16 @@ module Fonte
         its(:"team.value") { should == "Red" }
         its(:"points.value") { should == 3 }
         its(:"players_count.value") { should == 12 }
+
+        context "final score" do
+          let(:action) { 'Team "Red" final score "3" with "12" players' }
+          its(:value) { should == "final score" }
+        end
+
+        context "current score" do
+          let(:action) { 'Team "Red" current score "3" with "12" players' }
+          its(:value) { should == "current score" }
+        end
       end
 
       describe "weapon selection" do
