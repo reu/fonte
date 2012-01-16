@@ -7,7 +7,15 @@ module Fonte
       include Property
 
       rule action
-          connection_action
+          log_started_action
+        / log_ended_action
+        / cvar_start_action
+        / cvar_end_action
+        / cvar_set_action
+        / map_loading_action
+        / map_started_action
+        / server_name_action
+        / connection_action
         / validation_action
         / enter_game_action
         / disconnection_action
@@ -26,10 +34,95 @@ module Fonte
         / chat_action
         / team_chat_action
         / private_chat_action
+        / server_chat_action
         / team_alliance_action
         / score_report
         / weapon_selection_action
         / weapon_pickup_action
+      end
+
+      rule log_started_action
+        "Log file started" properties:action_properties? {
+          def value
+            "log start"
+          end
+        }
+      end
+
+      rule log_ended_action
+        "Log file closed" {
+          def value
+            "log end"
+          end
+        }
+      end
+
+      rule cvar_start_action
+        [Ss] "erver cvars start" {
+          def value
+            "cvar start"
+          end
+        }
+      end
+
+      rule cvar_end_action
+        [Ss] "erver cvars end" {
+          def value
+            "cvar end"
+          end
+        }
+      end
+
+      rule cvar_set_action
+        ([Ss] "erver cvar" SPACE)? key:quoted_word SPACE "=" SPACE val:quoted_word {
+          def value
+            "cvar set"
+          end
+
+          def to_hash
+            { key.value => val.value }
+          end
+        }
+      end
+
+      rule map_loading_action
+        "Loading map" SPACE name:map_name {
+          def value
+            "map load"
+          end
+        }
+      end
+
+      rule map_started_action
+        "Started map" SPACE name:map_name SPACE "(" crc:map_crc ")" {
+          def value
+            "map start"
+          end
+        }
+      end
+
+      rule map_name
+        quoted_word
+      end
+
+      rule map_crc
+        "CRC" SPACE quoted_word <Fonte::Nodes::SingleWordNode>
+      end
+
+      rule server_name_action
+        "Server name is" SPACE name:quoted_word {
+          def value
+            "server name"
+          end
+        }
+      end
+
+      rule server_chat_action
+        "Server say" SPACE message:quoted_word {
+          def value
+            "server chat"
+          end
+        }
       end
 
       rule connection_action
@@ -234,4 +327,3 @@ module Fonte
     end
   end
 end
-

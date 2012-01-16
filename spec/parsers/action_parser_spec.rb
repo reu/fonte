@@ -7,6 +7,67 @@ module Fonte
 
       subject { parser.parse(action) }
 
+      describe "log start" do
+        let(:action) { "Log file started" }
+        its(:value) { should == "log start" }
+
+        context "with properties" do
+          let(:action) { 'Log file started (file "logs/L0109005.log") (game "/home/ubuntu/srcds/orangebox/tf") (version "4785")' }
+          it_should_behave_like "a action with properties", "file", "game", "version"
+        end
+      end
+
+      describe "log end" do
+        let(:action) { "Log file closed" }
+        its(:value) { should == "log end" }
+      end
+
+      describe "cvar start" do
+        let(:action) { 'Server cvars start' }
+        its(:value) { should == "cvar start" }
+
+        context "when it starts with an downcase 'S'" do
+          let(:action) { 'server cvars start' }
+          its(:value) { should == "cvar start" }
+        end
+      end
+
+      describe "cvar end" do
+        let(:action) { 'Server cvars end' }
+        its(:value) { should == "cvar end" }
+
+        context "when it starts with an downcase 'S'" do
+          let(:action) { 'server cvars end' }
+          its(:value) { should == "cvar end" }
+        end
+      end
+
+      describe "cvar set" do
+        context "when it starts with 'Server'" do
+          let(:action) { 'Server cvar "key" = "value"' }
+          its(:value) { should == "cvar set" }
+          its(:"to_hash") { should == { "key" => "value"} }
+        end
+
+        context "when it starts with 'server'" do
+          let(:action) { 'server cvar "key" = "value"' }
+          its(:value) { should == "cvar set" }
+          its(:"to_hash") { should == { "key" => "value"} }
+        end
+
+        context "without the 'Server' entry" do
+          let(:action) { '"key" = "value"' }
+          its(:value) { should == "cvar set" }
+          its(:"to_hash") { should == { "key" => "value"} }
+        end
+      end
+
+      describe "sever name" do
+        let(:action) { 'Server name is "Manapot Server"' }
+        its(:value) { should == "server name" }
+        its(:"name.value") { should == "Manapot Server" }
+      end
+
       describe "connection" do
         let(:action) { '"Reu<2><STEAM_1:1:24968171><>" connected, address "187.123.17.180:27005"' }
         its(:value) { should == "connection" }
@@ -23,6 +84,19 @@ module Fonte
         let(:action) { '"Reu<2><STEAM_1:1:24968171><>" entered the game' }
         its(:value) { should == "enter" }
         its(:"player.value") { should == "Reu<2><STEAM_1:1:24968171><>" }
+      end
+
+      describe "map load" do
+        let(:action) { 'Loading map "c4m2_sugarmill_a"' }
+        its(:value) { should == "map load" }
+        its(:"name.value") { should == "c4m2_sugarmill_a" }
+      end
+
+      describe "map start" do
+        let(:action) { 'Started map "c4m2_sugarmill_a" (CRC "-431283537")' }
+        its(:value) { should == "map start" }
+        its(:"name.value") { should == "c4m2_sugarmill_a" }
+        its(:"crc.value") { should == "-431283537" }
       end
 
       describe "disconnection" do
@@ -197,6 +271,12 @@ module Fonte
         its(:"message.value") { should == "gogogo" }
         its(:"player.value") { should == "Reu<2><STEAM_1:1:24968171><Blue>" }
         its(:"target.value") { should == "guimello<13><STEAM_1:1:34492580><Blue>" }
+      end
+
+      describe "sever chat" do
+        let(:action) { 'Server say "Hai"' }
+        its(:value) { should == "server chat" }
+        its(:"message.value") { should == "Hai" }
       end
 
       describe "team alliance" do

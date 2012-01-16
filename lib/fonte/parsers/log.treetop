@@ -4,86 +4,14 @@ module Fonte
       include Word
       include Temporal
       include Rcon
+      include Action
 
       rule entry
-        "L" SPACE date_time ":" SPACE command
+        "L" SPACE date_time ":" SPACE command "\n"?
       end
 
       rule command
-          log_started
-        / log_ended
-        / cvar_start
-        / cvar_end
-        / cvar_set
-        / map_loading
-        / map_started
-        / server_name
-        / server_say
-        / rcon_command
-      end
-
-      rule log_ended
-        "Log file closed"
-      end
-
-      rule log_started
-        "Log file started" SPACE log_filename SPACE log_game_path SPACE log_game_version
-      end
-
-      rule log_filename
-        "(file" SPACE quoted_word ")" <Fonte::Nodes::SingleWordNode>
-      end
-
-      rule log_game_path
-        "(game" SPACE quoted_word ")" <Fonte::Nodes::SingleWordNode>
-      end
-
-      rule log_game_version
-        "(version" SPACE quoted_word ")" <Fonte::Nodes::SingleWordNode>
-      end
-
-      rule cvar_start
-        [Ss] "erver cvars start"
-      end
-
-      rule cvar_end
-        [Ss] "erver cvars end"
-      end
-
-      rule cvar_set
-        ([Ss] "erver cvar" SPACE)? key:quoted_word SPACE "=" SPACE val:quoted_word {
-          def name
-            key.value
-          end
-
-          def value
-            val.value
-          end
-        }
-      end
-
-      rule map_loading
-        "Loading map" SPACE map_name
-      end
-
-      rule map_started
-        "Started map" SPACE map_name SPACE "(" map_crc ")"
-      end
-
-      rule map_name
-        quoted_word
-      end
-
-      rule map_crc
-        "CRC" SPACE quoted_word <Fonte::Nodes::SingleWordNode>
-      end
-
-      rule server_name
-        "Server name is" SPACE server_name:quoted_word <Fonte::Nodes::SingleWordNode>
-      end
-
-      rule server_say
-        "Server say" SPACE server_say:quoted_word <Fonte::Nodes::SingleWordNode>
+        action / rcon_command
       end
     end
   end
