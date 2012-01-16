@@ -33,6 +33,8 @@ log.command.password.value              # => "super secret"
 log.date_time.day                       # => 26
 ```
 
-## Disclaimer
+## Games it supports
+In the current version it can parse all TF2, CSS and DOD files. Left4Dead is not supported yet due LOTS of "custom" events.
 
-This is a very early approach and can be a considered a proof of concept in the current version. Lots of things should (and will) be changed. For instance, I am not quite happy with the forced _".value"_ API, but for now, it was the easiest way to implement. Also, it doesn't support real games log yet, so, there should be a way to easily "plug" specific game "log commands".
+## Disclaimer
+This is a very early approach and can be a considered a proof of concept. Lots of things should (and will) be changed. For instance, I am not quite happy with the forced _".value"_ API, but for now, it was the easiest way to implement. Also, it doesn't support real games log yet, so, there should be a way to easily "plug" specific game "log commands".
