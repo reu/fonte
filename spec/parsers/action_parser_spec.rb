@@ -29,18 +29,33 @@ module Fonte
         let(:action) { '"Reu<2><STEAM_1:1:24968171><>" disconnected' }
         its(:value) { should == "disconnection" }
         its(:"player.value") { should == "Reu<2><STEAM_1:1:24968171><>" }
+
+        context "with properties" do
+          let(:action) { '"Reu<2><STEAM_1:1:24968171><>" disconnected (reason "Disconnect by user.")' }
+          it_should_behave_like "a action with properties", "reason"
+        end
       end
 
       describe "kick" do
         let(:action) { '"Reu<2><STEAM_1:1:24968171><>" was kicked by "Console"' }
         its(:value) { should == "kick" }
         its(:"player.value") { should == "Reu<2><STEAM_1:1:24968171><>" }
+
+        context "with properties" do
+          let(:action) { '"Reu<2><STEAM_1:1:24968171><>" was kicked by "Console" (reason "Disconnect by user.")' }
+          it_should_behave_like "a action with properties", "reason"
+        end
       end
 
       describe "kick and ban" do
         let(:action) { '"Reu<2><STEAM_1:1:24968171><>" was kicked and banned by "Console"' }
         its(:value) { should == "kickban" }
         its(:"player.value") { should == "Reu<2><STEAM_1:1:24968171><>" }
+
+        context "with properties" do
+          let(:action) { '"Reu<2><STEAM_1:1:24968171><>" was kicked and banned by "Console" (reason "Disconnect by user.")' }
+          it_should_behave_like "a action with properties", "reason"
+        end
       end
 
       describe "suicide" do
@@ -48,6 +63,11 @@ module Fonte
         its(:value) { should == "suicide" }
         its(:"player.value") { should == "Reu<2><STEAM_1:1:24968171><>" }
         its(:"weapon.value") { should == "weapon" }
+
+        context "with properties" do
+          let(:action) { '"Reu<2><STEAM_1:1:24968171><>" committed suicide with "weapon" (attacker_position "-3361 1361 -864")' }
+          it_should_behave_like "a action with properties", "attacker_position"
+        end
       end
 
       describe "join team" do
@@ -76,6 +96,11 @@ module Fonte
         its(:value) { should == "kill" }
         its(:"attacker.value") { should == "Reu<2><STEAM_1:1:24968171><Blue>" }
         its(:"victim.value") { should == "guimello<13><STEAM_1:1:34492580><Red>" }
+
+        context "with properties" do
+          let(:action) { '"Reu<2><STEAM_1:1:24968171><Blue>" killed "guimello<13><STEAM_1:1:34492580><Red>" with "minigun" (attacker_position "3354 -2485 -187") (victim_position "3410 -2518 -149")' }
+          it_should_behave_like "a action with properties", "attacker_position", "victim_position"
+        end
       end
 
       describe "injure" do
@@ -83,6 +108,11 @@ module Fonte
         its(:value) { should == "injure" }
         its(:"attacker.value") { should == "Reu<2><STEAM_1:1:24968171><Blue>" }
         its(:"victim.value") { should == "guimello<13><STEAM_1:1:34492580><Red>" }
+
+        context "with properties" do
+          let(:action) { '"Reu<2><STEAM_1:1:24968171><Blue>" attacked "guimello<13><STEAM_1:1:34492580><Red>" with "minigun" (attacker_position "3354 -2485 -187") (victim_position "3410 -2518 -149")' }
+          it_should_behave_like "a action with properties", "attacker_position", "victim_position"
+        end
       end
 
       describe "action trigger against player" do
@@ -90,12 +120,22 @@ module Fonte
         its(:value) { should == "player_extinguished" }
         its(:"attacker.value") { should == "Reu<2><STEAM_1:1:24968171><Blue>" }
         its(:"victim.value") { should == "guimello<13><STEAM_1:1:34492580><Red>" }
+
+        context "with properties" do
+          let(:action) { '"Reu<2><STEAM_1:1:24968171><Blue>" triggered "player_extinguished" against "guimello<13><STEAM_1:1:34492580><Red>" with "tf_weapon_medigun" (attacker_position "3354 -2485 -187") (victim_position "3410 -2518 -149")' }
+          it_should_behave_like "a action with properties", "attacker_position", "victim_position"
+        end
       end
 
       describe "player action" do
         let(:action) { '"Reu<2><STEAM_1:1:24968171><Blue>" triggered "builtobject"' }
         its(:value) { should == "builtobject" }
         its(:"player.value") { should == "Reu<2><STEAM_1:1:24968171><Blue>" }
+
+        context "with properties" do
+          let(:action) { '"Reu<2><STEAM_1:1:24968171><Blue>" triggered "builtobject" (attacker_position "3354 -2485 -187") (victim_position "3410 -2518 -149")' }
+          it_should_behave_like "a action with properties", "attacker_position", "victim_position"
+        end
       end
 
       describe "team action" do
@@ -107,6 +147,11 @@ module Fonte
       describe "world action" do
         let(:action) { 'World triggered "Round_Start"' }
         its(:value) { should == "Round_Start" }
+
+        context "with properties" do
+          let(:action) { 'World triggered "Mini_Round_Selected" (round "Round_A")' }
+          it_should_behave_like "a action with properties", "round"
+        end
       end
 
       describe "chat" do

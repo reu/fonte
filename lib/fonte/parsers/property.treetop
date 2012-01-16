@@ -1,0 +1,47 @@
+module Fonte
+  module Parsers
+    grammar Property
+      include Word
+
+      rule properties
+        property+ {
+          def value
+            elements.inject({}) { |properties, property| properties.merge property.value }
+          end
+        }
+      end
+
+      rule property
+        key_only_property / key_value_property
+      end
+
+      rule key_only_property
+        "(" property_key ")" SPACE? {
+          def value
+            { property_key.value => true }
+          end
+        }
+      end
+
+      rule key_value_property
+        "(" property_key SPACE property_value ")" SPACE? {
+          def value
+            { property_key.value => property_value.value }
+          end
+        }
+      end
+
+      rule property_key
+        (!SPACE ![()] character)+ {
+          def value
+            text_value
+          end
+        }
+      end
+
+      rule property_value
+        quoted_word
+      end
+    end
+  end
+end

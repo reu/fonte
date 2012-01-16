@@ -4,6 +4,7 @@ module Fonte
       include Word
       include Player
       include Address
+      include Property
 
       rule action
           connection_action
@@ -56,7 +57,7 @@ module Fonte
       end
 
       rule disconnection_action
-        QUOTE player QUOTE SPACE "disconnected" {
+        QUOTE player QUOTE SPACE "disconnected" properties:action_properties? {
           def value
             "disconnection"
           end
@@ -64,7 +65,7 @@ module Fonte
       end
 
       rule kick_action
-        QUOTE player QUOTE SPACE "was kicked by" SPACE '"Console"' {
+        QUOTE player QUOTE SPACE "was kicked by" SPACE '"Console"' properties:action_properties? {
           def value
             "kick"
           end
@@ -72,7 +73,7 @@ module Fonte
       end
 
       rule kick_and_ban_action
-        QUOTE player QUOTE SPACE "was kicked and banned by" SPACE '"Console"' {
+        QUOTE player QUOTE SPACE "was kicked and banned by" SPACE '"Console"' properties:action_properties? {
           def value
             "kickban"
           end
@@ -80,7 +81,7 @@ module Fonte
       end
 
       rule suicide_action
-        QUOTE player QUOTE SPACE "committed suicide with" SPACE QUOTE weapon QUOTE {
+        QUOTE player QUOTE SPACE "committed suicide with" SPACE QUOTE weapon QUOTE properties:action_properties? {
           def value
             "suicide"
           end
@@ -112,7 +113,7 @@ module Fonte
       end
 
       rule kill_action
-        QUOTE attacker:player QUOTE SPACE "killed" SPACE QUOTE victim:player QUOTE SPACE "with" SPACE QUOTE weapon QUOTE {
+        QUOTE attacker:player QUOTE SPACE "killed" SPACE QUOTE victim:player QUOTE SPACE "with" SPACE QUOTE weapon QUOTE properties:action_properties? {
           def value
             "kill"
           end
@@ -120,7 +121,7 @@ module Fonte
       end
 
       rule injure_action
-        QUOTE attacker:player QUOTE SPACE "attacked" SPACE QUOTE victim:player QUOTE SPACE "with" SPACE QUOTE weapon QUOTE {
+        QUOTE attacker:player QUOTE SPACE "attacked" SPACE QUOTE victim:player QUOTE SPACE "with" SPACE QUOTE weapon QUOTE properties:action_properties? {
           def value
             "injure"
           end
@@ -128,7 +129,7 @@ module Fonte
       end
 
       rule triggered_player_action_against_player
-        QUOTE attacker:player QUOTE SPACE "triggered" SPACE action:quoted_word SPACE "against" SPACE QUOTE victim:player QUOTE SPACE "with" SPACE QUOTE weapon QUOTE {
+        QUOTE attacker:player QUOTE SPACE "triggered" SPACE action:quoted_word SPACE "against" SPACE QUOTE victim:player QUOTE SPACE "with" SPACE QUOTE weapon QUOTE properties:action_properties? {
           def value
             action.value
           end
@@ -136,7 +137,7 @@ module Fonte
       end
 
       rule triggered_player_action
-        QUOTE player QUOTE SPACE "triggered" SPACE action:quoted_word {
+        QUOTE player QUOTE SPACE "triggered" SPACE action:quoted_word properties:action_properties? {
           def value
             action.value
           end
@@ -152,7 +153,7 @@ module Fonte
       end
 
       rule triggered_world_action
-        "World triggered" SPACE action:quoted_word {
+        "World triggered" SPACE action:quoted_word properties:action_properties? {
           def value
             action.value
           end
@@ -221,6 +222,14 @@ module Fonte
 
       rule weapon
         word
+      end
+
+      rule action_properties
+        SPACE properties {
+          def value
+            properties.value
+          end
+        }
       end
     end
   end
