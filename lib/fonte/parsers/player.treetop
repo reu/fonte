@@ -14,7 +14,7 @@ module Fonte
       end
 
       rule nickname
-        (![<>] .)* {
+        (![<>] character)* {
           def value
             text_value
           end

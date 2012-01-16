@@ -24,6 +24,16 @@ module Fonte
         it { should be }
         its(:value) { should == { "headshot" => true } }
       end
+
+      context "player property" do
+        let(:properties) { '(player "Reu<2><STEAM_1:1:24968171><Red>")' }
+        it { should be }
+
+        describe "player" do
+          subject { parser.parse(properties).value["player"] }
+          its(:"nickname.value") { should == "Reu" }
+        end
+      end
     end
   end
 end
