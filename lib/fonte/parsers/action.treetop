@@ -145,7 +145,7 @@ module Fonte
       end
 
       rule triggered_team_action
-        "Team" SPACE QUOTE team QUOTE SPACE "triggered" SPACE action:quoted_word {
+        "Team" SPACE QUOTE team QUOTE SPACE "triggered" SPACE action:quoted_word properties:action_properties? {
           def value
             action.value
           end

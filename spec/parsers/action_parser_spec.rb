@@ -160,6 +160,11 @@ module Fonte
         let(:action) { 'Team "Red" triggered "capture"' }
         its(:value) { should == "capture" }
         its(:"team.value") { should == "Red" }
+
+        context "with properties" do
+          let(:action) { 'Team "Red" triggered "pointcaptured" (cp "3") (cpname "#Badwater_cap_4") (numcappers "1") (player1 "Reu<2><STEAM_1:1:24968171><Blue>") (position1 "-2902 1411 617")' }
+          it_should_behave_like "a action with properties", "cp", "cpname", "numcappers", "player1", "position1"
+        end
       end
 
       describe "world action" do
