@@ -9,11 +9,19 @@ module Fonte
       end
 
       rule rcon_success
-        "Rcon:" SPACE rcon_challenge <Fonte::Nodes::RconCommandNode>
+        "Rcon:" SPACE rcon_challenge <Fonte::Nodes::RconCommandNode> {
+          def value
+            "successfully rcon"
+          end
+        }
       end
 
       rule rcon_failure
-        "Bad Rcon:" SPACE rcon_challenge <Fonte::Nodes::RconCommandNode>
+        "Bad Rcon:" SPACE rcon_challenge <Fonte::Nodes::RconCommandNode> {
+          def value
+            "bad rcon"
+          end
+        }
       end
 
       rule rcon_challenge

@@ -10,11 +10,13 @@ module Fonte
       context "with a successfully rcon challenge" do
         let(:rcon_command) { 'Rcon: "rcon challenge "password" command" from "192.168.10.1:17015"' }
         it_should_behave_like "a rcon command", :password => "password", :origin => "//192.168.10.1:17015"
+        its(:value) { should == "successfully rcon" }
       end
 
       context "with a bad rcon challenge" do
         let(:rcon_command) { 'Bad Rcon: "rcon challenge "password" command" from "192.168.10.1:17015"' }
         it_should_behave_like "a rcon command", :password => "password", :origin => "//192.168.10.1:17015"
+        its(:value) { should == "bad rcon" }
       end
     end
   end
