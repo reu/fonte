@@ -1,0 +1,93 @@
+module Fonte
+  module Parsers
+    grammar L4D2Player
+      include Word
+      include Number
+      include SourcePlayer
+
+      rule l4d2_player
+        source_player "<" character:l4d2_character ">" "<" status:l4d2_player_status ">" "<" l4d2_life ">" "<" l4d2_position ">" "<" area:l4d2_area ">" {
+          def nickname
+            source_player.nickname
+          end
+
+          def uid
+            source_player.uid
+          end
+
+          def steam_id
+            source_player.steam_id
+          end
+
+          def team
+            source_player.team
+          end
+
+          def life
+            l4d2_life.life
+          end
+
+          def blood
+            l4d2_life.blood
+          end
+
+          def position
+            l4d2_position.position
+          end
+
+          def angle
+            l4d2_position.angle
+          end
+
+          def value
+            source_player.value
+          end
+        }
+      end
+
+      rule l4d2_character
+        (![<>] character)* {
+          def value
+            text_value
+          end
+        }
+      end
+
+      rule l4d2_player_status
+        (![<>] character)* {
+          def value
+            text_value
+          end
+        }
+      end
+
+      rule l4d2_life
+        life:integer "+" blood:integer {
+          def value
+            { :life => life.value, :blood => blood.value }
+          end
+        }
+      end
+
+      rule l4d2_position
+        "setpos_exact" SPACE position:coordinates ";" SPACE "setang" SPACE angle:coordinates
+      end
+
+      rule l4d2_area
+        "Area" SPACE integer {
+          def value
+            integer.value
+          end
+        }
+      end
+
+      rule coordinates
+        x:float SPACE y:float SPACE z:float {
+          def value
+            [x.value, y.value, z.value]
+          end
+        }
+      end
+    end
+  end
+end

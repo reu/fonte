@@ -1,36 +1,11 @@
 module Fonte
   module Parsers
     grammar Player
-      include Number
-      include Word
-      include SteamID
+      include SourcePlayer
+      include L4D2Player
 
       rule player
-        nickname "<" uid ">" "<" steam_id ">" "<" team ">" {
-          def value
-            text_value
-          end
-        }
-      end
-
-      rule nickname
-        (![<>] character)* {
-          def value
-            text_value
-          end
-        }
-      end
-
-      rule uid
-        integer
-      end
-
-      rule team
-        (![<>] character)* {
-          def value
-            text_value == "Unassigned" || text_value == "Console" || text_value == "" ? nil : text_value
-          end
-        }
+        l4d2_player / source_player
       end
     end
   end
