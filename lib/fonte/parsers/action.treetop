@@ -5,6 +5,7 @@ module Fonte
       include Player
       include Address
       include Property
+      include Rcon
 
       rule action
           log_started_action
@@ -39,6 +40,7 @@ module Fonte
         / score_report
         / weapon_selection_action
         / weapon_pickup_action
+        / rcon_command
       end
 
       rule log_started_action

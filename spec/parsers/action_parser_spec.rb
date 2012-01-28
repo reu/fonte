@@ -317,6 +317,11 @@ module Fonte
         its(:"player.value") { should == "Reu<2><STEAM_1:1:24968171><Blue>" }
         its(:"weapon.value") { should == "Shotgun" }
       end
+
+      describe "rcon command" do
+        let(:action) { 'Rcon: "rcon challenge "password" command" from "192.168.10.1:17015"' }
+        it_should_behave_like "a rcon command", :password => "password", :origin => "//192.168.10.1:17015"
+      end
     end
   end
 end

@@ -3,15 +3,10 @@ module Fonte
     grammar Log
       include Word
       include Temporal
-      include Rcon
       include Action
 
       rule entry
-        "L" SPACE date_time ":" SPACE command "\n"?
-      end
-
-      rule command
-        action / rcon_command
+        "L" SPACE date_time ":" SPACE command:action "\n"?
       end
     end
   end
