@@ -6,7 +6,7 @@ module Fonte
       include Action
 
       rule entry
-        "L" SPACE date_time ":" SPACE command:action "\n"?
+        (!"L" .)* "L" SPACE date_time ":" SPACE command:action "\n"?
       end
     end
   end

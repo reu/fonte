@@ -20,6 +20,11 @@ module Fonte
           subject { parser.parse(text).command }
           it { should be }
         end
+
+        context "when there are garbage before the log line" do
+          let(:text) { '????RL 12/26/2011 - 02:14:29: Loading map "c4m2_sugarmill_a"' }
+          it { should be }
+        end
       end
     end
   end
