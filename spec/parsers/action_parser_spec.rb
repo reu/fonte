@@ -60,6 +60,12 @@ module Fonte
           its(:value) { should == "cvar set" }
           its(:"to_hash") { should == { "key" => "value"} }
         end
+
+        context "when it starts with server_cvar" do
+          let(:action) { 'server_cvar: "key" "value"' }
+          its(:value) { should == "cvar set" }
+          its(:"to_hash") { should == { "key" => "value"} }
+        end
       end
 
       describe "sever name" do

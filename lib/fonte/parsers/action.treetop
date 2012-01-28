@@ -76,7 +76,7 @@ module Fonte
       end
 
       rule cvar_set_action
-        ([Ss] "erver cvar" SPACE)? key:quoted_word SPACE "=" SPACE val:quoted_word {
+        (cvar_set_complete_syntax / cvar_set_colon_sytax) {
           def value
             "cvar set"
           end
@@ -85,6 +85,14 @@ module Fonte
             { key.value => val.value }
           end
         }
+      end
+
+      rule cvar_set_complete_syntax
+        ([Ss] "erver cvar" SPACE)? key:quoted_word SPACE "=" SPACE val:quoted_word
+      end
+
+      rule cvar_set_colon_sytax
+        "server_cvar:" SPACE key:quoted_word SPACE val:quoted_word
       end
 
       rule map_loading_action
