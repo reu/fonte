@@ -37,22 +37,12 @@ module Fonte
 
       context "number property" do
         let(:properties) { '(area "10")' }
-        it { should be }
-
-        describe "area" do
-          subject { parser.parse(properties).value["area"] }
-          its(:value) { should == 10 }
-        end
+        its(:value) { should == { "area" => 10 } }
       end
 
       context "coordinate property" do
         let(:properties) { '(attacker_position "-1624 1258 617")' }
-        it { should be }
-
-        describe "attacker_position" do
-          subject { parser.parse(properties).value["attacker_position"] }
-          its(:value) { should == [-1624, 1258, 617] }
-        end
+        its(:value) { should == { "attacker_position" => [-1624, 1258, 617] } }
       end
     end
   end

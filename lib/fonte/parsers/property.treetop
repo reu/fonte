@@ -50,7 +50,11 @@ module Fonte
       end
 
       rule number_property
-        QUOTE value:number QUOTE
+        QUOTE number QUOTE {
+          def value
+            number.value
+          end
+        }
       end
     end
   end
