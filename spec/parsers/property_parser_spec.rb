@@ -44,6 +44,16 @@ module Fonte
           its(:value) { should == 10 }
         end
       end
+
+      context "coordinate property" do
+        let(:properties) { '(attacker_position "-1624 1258 617")' }
+        it { should be }
+
+        describe "attacker_position" do
+          subject { parser.parse(properties).value["attacker_position"] }
+          its(:value) { should == [-1624, 1258, 617] }
+        end
+      end
     end
   end
 end

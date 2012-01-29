@@ -75,6 +75,23 @@ module Fonte
           end
         end
       end
+
+      describe "coordinates" do
+        context "only integers" do
+          let(:number) { "10 10 20" }
+          it { should == [10, 10, 20] }
+        end
+
+        context "only floats" do
+          let(:number) { "3617.36 -1739.69 294.53" }
+          it { should == [3617.36, -1739.69, 294.53] }
+        end
+
+        context "mixing integers and floats" do
+          let(:number) { "3617.36 -1739 294.53" }
+          it { should == [3617.36, -1739, 294.53] }
+        end
+      end
     end
   end
 end

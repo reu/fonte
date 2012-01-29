@@ -1,8 +1,10 @@
 module Fonte
   module Parsers
     grammar Number
+      include Word
+
       rule number
-        float / integer
+        coordinates / float / integer
       end
 
       rule float
@@ -34,6 +36,18 @@ module Fonte
             Integer(text_value)
           end
         }
+      end
+
+      rule coordinates
+        x:coordinate SPACE y:coordinate SPACE z:coordinate {
+          def value
+            [x.value, y.value, z.value]
+          end
+        }
+      end
+
+      rule coordinate
+        float / integer
       end
     end
   end

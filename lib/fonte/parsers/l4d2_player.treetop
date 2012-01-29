@@ -80,14 +80,6 @@ module Fonte
           end
         }
       end
-
-      rule coordinates
-        x:float SPACE y:float SPACE z:float {
-          def value
-            [x.value, y.value, z.value]
-          end
-        }
-      end
     end
   end
 end
