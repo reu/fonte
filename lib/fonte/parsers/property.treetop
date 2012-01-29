@@ -2,6 +2,7 @@ module Fonte
   module Parsers
     grammar Property
       include Word
+      include Number
       include Player
 
       rule properties
@@ -41,11 +42,15 @@ module Fonte
       end
 
       rule property_value
-        player_property / quoted_word
+        number_property / player_property / quoted_word
       end
 
       rule player_property
         QUOTE value:player QUOTE
+      end
+
+      rule number_property
+        QUOTE value:number QUOTE
       end
     end
   end

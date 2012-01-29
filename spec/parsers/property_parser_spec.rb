@@ -34,6 +34,16 @@ module Fonte
           its(:"nickname.value") { should == "Reu" }
         end
       end
+
+      context "number property" do
+        let(:properties) { '(area "10")' }
+        it { should be }
+
+        describe "area" do
+          subject { parser.parse(properties).value["area"] }
+          its(:value) { should == 10 }
+        end
+      end
     end
   end
 end
