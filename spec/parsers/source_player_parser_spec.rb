@@ -22,6 +22,11 @@ module Fonte
         its(:"steam_id.value") { should be_nil }
       end
 
+      context "when the steam id is blank" do
+        let(:player) { "Reu<2><><Unassigned>" }
+        its(:"steam_id.value") { should be_nil }
+      end
+
       context "when the player is the console" do
         let(:player) { "Console<0><Console><Console>" }
         its(:"steam_id.value") { should be_nil }

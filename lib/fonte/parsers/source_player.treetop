@@ -6,7 +6,7 @@ module Fonte
       include SteamID
 
       rule source_player
-        nickname "<" uid ">" "<" steam_id ">" "<" team ">" {
+        nickname "<" uid ">" "<" steam_id:player_steam_id ">" "<" team ">" {
           def value
             text_value
           end
@@ -23,6 +23,14 @@ module Fonte
 
       rule uid
         integer
+      end
+
+      rule player_steam_id
+        steam_id / "" {
+          def value
+            nil
+          end
+        }
       end
 
       rule team
