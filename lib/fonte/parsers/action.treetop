@@ -216,9 +216,38 @@ module Fonte
       end
 
       rule kill_action
+        source_kill_action / l4d2_kill_action
+      end
+
+      rule source_kill_action
         QUOTE attacker:player QUOTE SPACE "killed" SPACE QUOTE victim:player QUOTE SPACE "with" SPACE QUOTE weapon QUOTE properties:action_properties? {
           def value
             "kill"
+          end
+        }
+      end
+
+      # TODO: move this to separated grammar
+      rule l4d2_kill_action
+        "(DEATH)" source_kill_action {
+          def value
+            "kill"
+          end
+
+          def attacker
+            source_kill_action.attacker
+          end
+
+          def victim
+            source_kill_action.victim
+          end
+
+          def weapon
+            source_kill_action.weapon
+          end
+
+          def properties
+            source_kill_action.properties
           end
         }
       end

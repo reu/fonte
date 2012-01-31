@@ -181,6 +181,18 @@ module Fonte
           let(:action) { '"Reu<2><STEAM_1:1:24968171><Blue>" killed "guimello<13><STEAM_1:1:34492580><Red>" with "minigun" (attacker_position "3354 -2485 -187") (victim_position "3410 -2518 -149")' }
           it_should_behave_like "a action with properties", "attacker_position", "victim_position"
         end
+
+        context "l4d2 format" do
+          let(:action) { '(DEATH)"Reu<2><STEAM_1:1:24968171><Survivor><Gambler><ALIVE><80+0><setpos_exact 4793.19 -3962.89 165.33; setang 18.14 -34.47 0.00><Area 70>" killed "infected<552><><Infected><infected><DEAD><0><setpos_exact 4831.17 -3989.32 104.81; setang 0.00 288.65 0.00><Area 792>" with "melee"' }
+          its(:value) { should == "kill" }
+          its(:"attacker.value") { should == "Reu<2><STEAM_1:1:24968171><Survivor>" }
+          its(:"victim.value") { should == "infected<552><><Infected>" }
+
+          context "with properties" do
+            let(:action) { '(DEATH)"Reu<2><STEAM_1:1:24968171><Survivor><Gambler><ALIVE><80+0><setpos_exact 4793.19 -3962.89 165.33; setang 18.14 -34.47 0.00><Area 70>" killed "infected<552><><Infected><infected><DEAD><0><setpos_exact 4831.17 -3989.32 104.81; setang 0.00 288.65 0.00><Area 792>" with "melee" (headshot)' }
+            it_should_behave_like "a action with properties", "headshot"
+          end
+        end
       end
 
       describe "injure" do
