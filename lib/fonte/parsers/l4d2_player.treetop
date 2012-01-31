@@ -24,11 +24,11 @@ module Fonte
           end
 
           def life
-            l4d2_life.life
+            l4d2_life.value[:life]
           end
 
           def blood
-            l4d2_life.blood
+            l4d2_life.value[:blood]
           end
 
           def position
@@ -62,6 +62,14 @@ module Fonte
       end
 
       rule l4d2_life
+        l4d2_life_blood / "0" {
+          def value
+            { :life => 0, :blood => 0 }
+          end
+        }
+      end
+
+      rule l4d2_life_blood
         life:integer "+" blood:integer {
           def value
             { :life => life.value, :blood => blood.value }
