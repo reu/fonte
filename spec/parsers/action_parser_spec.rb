@@ -267,6 +267,11 @@ module Fonte
           let(:action) { 'World triggered "Mini_Round_Selected" (round "Round_A")' }
           it_should_behave_like "a action with properties", "round"
         end
+
+        context "with reason" do
+          let(:action) { 'World triggered "Game_Over" reason "Reached Time Limit"' }
+          its(:value) { should == "Game_Over" }
+        end
       end
 
       describe "chat" do

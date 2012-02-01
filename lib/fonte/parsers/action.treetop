@@ -285,9 +285,17 @@ module Fonte
       end
 
       rule triggered_world_action
-        "World triggered" SPACE action:quoted_word properties:action_properties? {
+        "World triggered" SPACE action:quoted_word reason:triggered_world_action_reason? properties:action_properties? {
           def value
             action.value
+          end
+        }
+      end
+
+      rule triggered_world_action_reason
+        SPACE "reason" SPACE reason:quoted_word {
+          def value
+            reason.value
           end
         }
       end
