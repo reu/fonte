@@ -33,14 +33,27 @@ module Fonte
         end
 
         context "of a bot" do
-          let(:steam_id) { "Bot" }
-          its(:value) { should_not be }
+          context "labeled as Bot" do
+            let(:steam_id) { "Bot" }
+            its(:value) { should_not be }
 
-          it { should_not be_real_player }
-          it { should_not be_unknown }
-          it { should be_bot }
-          it { should_not be_pending }
-          it { should_not be_console }
+            it { should_not be_real_player }
+            it { should_not be_unknown }
+            it { should be_bot }
+            it { should_not be_pending }
+            it { should_not be_console }
+          end
+
+          context "labeled as BOT" do
+            let(:steam_id) { "BOT" }
+            its(:value) { should_not be }
+
+            it { should_not be_real_player }
+            it { should_not be_unknown }
+            it { should be_bot }
+            it { should_not be_pending }
+            it { should_not be_console }
+          end
         end
 
         context "of a invalid user" do

@@ -24,7 +24,7 @@ module Fonte
       end
 
       rule steam_id_bot
-        "Bot" <Fonte::Nodes::SteamIDNode> {
+        "B" ("ot" / "OT") <Fonte::Nodes::SteamIDNode> {
           def bot?
             true
           end
