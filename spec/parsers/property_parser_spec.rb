@@ -31,7 +31,7 @@ module Fonte
 
         describe "player" do
           subject { parser.parse(properties).value["player"] }
-          its(:"nickname.value") { should == "Reu" }
+          it_should_behave_like "a real player"
         end
       end
 
