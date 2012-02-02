@@ -345,6 +345,13 @@ module Fonte
         let(:action) { 'Rcon: "rcon challenge "password" command" from "192.168.10.1:17015"' }
         it_should_behave_like "a rcon command", :password => "password", :origin => "//192.168.10.1:17015"
       end
+
+      describe "steamauth" do
+        let(:action) { 'STEAMAUTH: Client reu received failure code 6' }
+        its(:value) { should == "authentication failure" }
+        its(:"client.value") { should == "reu" }
+        its(:"code.value") { should == 6 }
+      end
     end
   end
 end

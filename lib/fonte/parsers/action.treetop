@@ -41,6 +41,7 @@ module Fonte
         / weapon_selection_action
         / weapon_pickup_action
         / rcon_command
+        / steamauth_failure_action
       end
 
       rule log_started_action
@@ -365,6 +366,22 @@ module Fonte
         QUOTE player QUOTE SPACE "acquired weapon" SPACE QUOTE weapon QUOTE {
           def value
             "weapon pickup"
+          end
+        }
+      end
+
+      rule steamauth_failure_action
+        "STEAMAUTH: Client" SPACE client:steamauth_client SPACE "received failure code" SPACE code:integer {
+          def value
+            "authentication failure"
+          end
+        }
+      end
+
+      rule steamauth_client
+        (!SPACE .)+ {
+          def value
+            text_value
           end
         }
       end
