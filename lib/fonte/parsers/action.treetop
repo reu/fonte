@@ -42,6 +42,7 @@ module Fonte
         / weapon_pickup_action
         / rcon_command
         / steamauth_failure_action
+        / spawn_action
       end
 
       rule log_started_action
@@ -374,6 +375,14 @@ module Fonte
         "STEAMAUTH: Client" SPACE client:steamauth_client SPACE "received failure code" SPACE code:integer {
           def value
             "authentication failure"
+          end
+        }
+      end
+
+      rule spawn_action
+        QUOTE player QUOTE SPACE "spawned" {
+          def value
+            "spawn"
           end
         }
       end

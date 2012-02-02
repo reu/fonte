@@ -352,6 +352,12 @@ module Fonte
         its(:"client.value") { should == "reu" }
         its(:"code.value") { should == 6 }
       end
+
+      describe "spawn" do
+        let(:action) { '"Pulo_ms<8><STEAM_1:1:41920953><Survivor><Producer><ALIVE><100+0><setpos_exact 3617.36 -1739.69 294.53; setang 0.00 179.84 0.00><Area 205>" spawned' }
+        its(:value) { should == "spawn" }
+        its(:"player.value") { should == "Pulo_ms<8><STEAM_1:1:41920953><Survivor>" }
+      end
     end
   end
 end
