@@ -33,6 +33,21 @@ log.command.password.value              # => "super secret"
 log.date_time.day                       # => 26
 ```
 
+And here goes a very extensive example:
+
+```ruby
+parser = Fonte::Parsers::LogParser.new
+log = parser.parse('"Reu<2><STEAM_1:1:24968171><Blue>" killed "guimello<13><STEAM_1:1:34492580><Red>" with "minigun" (headshot) (attacker_position "3354 -2485 -187") (victim_position "3410 -2518 -149")')
+log.command.value                                  # => "kill"
+log.command.attacker.nickname.value                # => "Reu"
+log.command.attacker.team.value                    # => "Blue"
+log.command.victim.steam_id.value                  # => "STEAM_1:1:34492580"
+log.command.victim.uid.value                       # => 13
+log.command.weapon.value                           # => "minigun"
+log.command.properties.value["headshot"]           # => true
+log.command.properties.value["attacker_position"]  # => [3354, -2485, -187]
+```
+
 ## Games it supports
 In the current version it can parse all TF2, L4D, CSS and DOD files.
 
