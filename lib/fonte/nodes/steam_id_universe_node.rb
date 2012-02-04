@@ -35,7 +35,7 @@ module Fonte
       end
 
       def developer?
-        value = "Dev"
+        value == "Dev"
       end
 
       def rc?

@@ -86,6 +86,11 @@ module Fonte
           let(:steam_id) { "STEAM_0:1:24968171" }
 
           it { should be_unspecified }
+          it { should_not be_public }
+          it { should_not be_beta }
+          it { should_not be_internal }
+          it { should_not be_developer }
+          it { should_not be_rc }
           its(:value) { should == "Unspecified" }
         end
 
@@ -93,6 +98,11 @@ module Fonte
           let(:steam_id) { "STEAM_1:1:24968171" }
 
           it { should be_public }
+          it { should_not be_unspecified }
+          it { should_not be_beta }
+          it { should_not be_internal }
+          it { should_not be_developer }
+          it { should_not be_rc }
           its(:value) { should == "Public" }
         end
 
@@ -100,6 +110,11 @@ module Fonte
           let(:steam_id) { "STEAM_2:1:24968171" }
 
           it { should be_beta }
+          it { should_not be_unspecified }
+          it { should_not be_public }
+          it { should_not be_internal }
+          it { should_not be_developer }
+          it { should_not be_rc }
           its(:value) { should == "Beta" }
         end
 
@@ -107,6 +122,11 @@ module Fonte
           let(:steam_id) { "STEAM_3:1:24968171" }
 
           it { should be_internal }
+          it { should_not be_unspecified }
+          it { should_not be_public }
+          it { should_not be_beta }
+          it { should_not be_developer }
+          it { should_not be_rc }
           its(:value) { should == "Internal" }
         end
 
@@ -114,6 +134,11 @@ module Fonte
           let(:steam_id) { "STEAM_4:1:24968171" }
 
           it { should be_developer }
+          it { should_not be_unspecified }
+          it { should_not be_public }
+          it { should_not be_beta }
+          it { should_not be_internal }
+          it { should_not be_rc }
           its(:value) { should == "Dev" }
         end
 
@@ -121,6 +146,11 @@ module Fonte
           let(:steam_id) { "STEAM_5:1:24968171" }
 
           it { should be_rc }
+          it { should_not be_unspecified }
+          it { should_not be_public }
+          it { should_not be_beta }
+          it { should_not be_internal }
+          it { should_not be_developer }
           its(:value) { should == "RC" }
         end
       end
