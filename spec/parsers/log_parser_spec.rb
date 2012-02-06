@@ -8,7 +8,7 @@ module Fonte
       subject { parser.parse(text) }
 
       describe "entry" do
-        let(:text) { 'L 12/26/2011 - 02:14:29: Loading map "c4m2_sugarmill_a"' }
+        let(:text) { '12/26/2011 - 02:14:29: Loading map "c4m2_sugarmill_a"' }
         it { should be }
 
         describe "time" do
@@ -27,7 +27,7 @@ module Fonte
         end
 
         context "when there is a line break after the log line" do
-          let(:text) { "L 12/26/2011 - 02:14:29: server cvars start\n" }
+          let(:text) { "12/26/2011 - 02:14:29: server cvars start\n" }
           it { should be }
         end
       end
