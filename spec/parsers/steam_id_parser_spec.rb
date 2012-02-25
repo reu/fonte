@@ -182,6 +182,20 @@ module Fonte
         let(:steam_id) { "STEAM_0:0:24968171" }
         its(:value) { should == 24968171 }
       end
+
+      describe "community_id" do
+        subject { parser.parse(steam_id).community_id }
+
+        context "with a steam_id that represents a user" do
+          let(:steam_id) { "STEAM_1:1:24968171" }
+          it { should == 76561198010202071 }
+        end
+
+        context "with a steam_id that doesn't represent a user" do
+          let(:steam_id) { "STEAM_ID_PENDING" }
+          it { should be_nil }
+        end
+      end
     end
   end
 end
